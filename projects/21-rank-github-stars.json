@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-github-stars",
+  "name": "GitHub Star 排序",
+  "kind": "website",
+  "url": "https://github.com/search?q=stars%3A%3E1000&type=repositories&s=stars&o=desc",
+  "description": "按累计 Star 排序的仓库搜索，不是趋势榜。",
+  "icon": "star",
+  "builtin": true,
+  "rankingCategory": "github"
+}

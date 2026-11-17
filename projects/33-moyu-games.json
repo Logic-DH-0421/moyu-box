@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "moyu-games",
+  "name": "摸鱼游戏",
+  "url": "https://moyu.games/",
+  "description": "在线游戏入口。",
+  "icon": "app",
+  "kind": "website",
+  "builtin": true
+}

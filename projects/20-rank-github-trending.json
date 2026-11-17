@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-github-trending",
+  "name": "GitHub Trending",
+  "kind": "website",
+  "url": "https://github.com/trending",
+  "description": "GitHub 日、周、月趋势榜。",
+  "icon": "blocks",
+  "builtin": true,
+  "rankingCategory": "github"
+}

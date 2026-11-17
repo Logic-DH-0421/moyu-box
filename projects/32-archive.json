@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "archive",
+  "name": "Internet Archive",
+  "url": "https://archive.org/",
+  "description": "互联网档案与数字馆藏。",
+  "icon": "book",
+  "kind": "website",
+  "builtin": true
+}

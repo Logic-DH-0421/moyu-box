@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-skillsmp",
+  "name": "SkillsMP",
+  "kind": "website",
+  "url": "https://skillsmp.com/",
+  "description": "Skills 搜索与精选目录，不是统一质量排行榜。",
+  "icon": "compass",
+  "builtin": true,
+  "rankingCategory": "skill"
+}

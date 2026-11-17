@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>摸鱼盒子</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="harness.css">
+  <script src="core.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell" id="shell">
+    <aside class="sidebar" aria-label="功能导航">
+      <button class="icon-button sidebar-toggle" data-action="sidebar-toggle" aria-label="收起侧边栏" aria-expanded="true"><span data-icon="sidebar"></span></button>
+      <div class="brand"><span data-icon="fish"></span><span>摸鱼盒子</span><small class="brand-mark">MyBox</small></div>
+      <button class="new-project" data-action="add" aria-label="添加项目"><span data-icon="plus"></span><span>添加项目</span></button>
+      <div class="tagline">工作区</div>
+      <nav>
+        <button class="nav selected" data-section="pond" aria-current="page"><span data-icon="waves"></span><span>鱼塘<small>项目与网站</small></span></button>
+        <button class="nav" data-section="rankings"><span data-icon="compass"></span><span>渔具<small>榜单导航</small></span></button>
+        <button class="nav" data-section="chat"><span data-icon="chat"></span><span>鱼聊<small>开放式聊天室</small></span></button>
+        <button class="nav" data-section="bait"><span data-icon="mail"></span><span>鱼饵<small>联系作者</small></span></button>
+      </nav>
+      <div class="sidebar-bottom"><button class="nav" data-section="settings"><span data-icon="settings"></span><span>鱼钩<small>软件设置</small></span></button><div id="running" class="running">所有项目，收在鱼塘里。</div><button class="profile" data-section="gear"><span class="avatar" id="profile-avatar">鱼</span><span><strong>鱼苗</strong><small id="profile-name">个人信息与收藏</small></span></button></div>
+    </aside>
+    <section class="workspace">
+      <header class="tabbar" id="tabbar" aria-label="项目标签页"></header>
+      <main id="main"><div class="empty"><span class="spinner"></span><h1>正在打开鱼塘</h1></div></main>
+      <footer><span id="footer-status">正在加载项目配置…</span></footer>
+    </section>
+  </div>
+  <div id="toast" role="status" hidden></div>
+  <div id="modal-backdrop" hidden><section id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section></div>
+</body>
+</html>

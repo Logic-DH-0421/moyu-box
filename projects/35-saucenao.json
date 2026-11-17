@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "saucenao",
+  "name": "SauceNAO",
+  "url": "https://www.saucenao.cn/",
+  "description": "用户指定的图片检索网站。",
+  "icon": "globe",
+  "kind": "website",
+  "builtin": true
+}

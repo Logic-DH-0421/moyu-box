@@ -1,0 +1,45 @@
+// Isolated visual/interaction checks for the shell. Real WebView integration runs separately.
+const {chromium}=require('playwright');
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+(async()=>{
+ const root=path.resolve(__dirname,'..'),out=path.join(root,'artifacts','ui-navigation-0.8.0','layout');fs.mkdirSync(out,{recursive:true});
+ const browser=await chromium.launch({channel:'msedge',headless:true});
+ try{
+ const page=await browser.newPage(),errors=[],checks=[];page.setDefaultTimeout(10000);page.on('pageerror',e=>errors.push(e.message));
+ const projects=fs.readdirSync(path.join(root,'projects')).filter(f=>f.endsWith('.json')).map(f=>({...JSON.parse(fs.readFileSync(path.join(root,'projects',f),'utf8')),enabled:true}));
+ await page.addInitScript(projects=>{
+  let listener;const state={projects,theme:'light',favoriteIds:[],sessions:{},displayName:'小鱼',version:'0.8.0',defaultBookReader:'word',autoMaximizeProjects:true,diagnostics:{level:'INFO'}};
+  window.chrome={webview:{addEventListener:(type,fn)=>listener=fn,postMessage:m=>setTimeout(()=>{
+   if(m.method==='favorite')state.favoriteIds=state.favoriteIds.includes(m.params.id)?state.favoriteIds.filter(x=>x!==m.params.id):[...state.favoriteIds,m.params.id];
+   if(m.method==='settings')state.theme=m.params.theme;
+   if(m.method==='open')state.sessions[m.params.id]={status:'ready'};
+   listener({data:{replyTo:m.id,ok:true,value:true}});if(m.method!=='viewport')listener({data:{type:'snapshot',state:structuredClone(state)}});
+  },0)}};
+ },projects);
+ await page.goto('file:///'+path.join(root,'src','Shell','index.html').replaceAll('\\','/'));await page.locator('.project-card').first().waitFor();
+ for(const width of [1440,1040,818,760,600,375]){
+  await page.setViewportSize({width,height:width===818?540:800});
+  for(const route of ['pond','rankings','chat','bait','gear','settings']){
+   await page.locator('.sidebar [data-section='+route+']').click();
+   await page.waitForTimeout(50);
+   const bad=await page.evaluate(()=>[...document.querySelectorAll('#main button,#main input,#main select,#main textarea')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden').filter(e=>{const b=e.getBoundingClientRect(),m=document.querySelector('#main').getBoundingClientRect();return b.left<m.left-1||b.right>m.right+1;}).map(e=>e.outerHTML.slice(0,100)));
+   assert.equal(bad.length,0,`${width} ${route}: controls overflow ${bad}`);
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));checks.push(`${width}px ${route}`);
+  }
+ }
+ await page.setViewportSize({width:1040,height:800});await page.locator('.sidebar [data-section=pond]').click();
+ await page.locator('.new-project').click();assert(await page.locator('#modal').isVisible());await page.keyboard.press('Escape');
+ await page.locator('[data-action=favorite]').first().click();await page.waitForFunction(()=>document.querySelector('[data-action=favorite]').getAttribute('aria-pressed')==='true');await page.locator('.sidebar [data-section=gear]').click();await page.locator('#profile-form').waitFor();assert.equal(await page.locator('.project-card').count(),0);await page.locator('[data-action=pond-favorites]').click();await page.locator('[data-filter=favorites].selected').waitFor();assert.equal(await page.locator('.project-card').count(),1);await page.locator('[data-filter=all]').click();checks.push('add modal, Escape, favorites moved to pond');
+ await page.locator('.sidebar [data-section=pond]').click();await page.locator('[data-open=shijie]').click();await page.locator('[data-tab=shijie]').waitFor();await page.locator('.sidebar [data-section=chat]').click();assert.equal(await page.locator('[data-tab=shijie]').count(),1);checks.push('project tab retained across navigation');
+ await page.locator('.sidebar [data-section=pond]').click();await page.waitForFunction(()=>document.querySelector('#main h1')?.textContent==='鱼塘');await page.mouse.move(1030,790);await page.screenshot({path:path.join(out,'pond-light.png')});
+ await page.locator('.sidebar [data-section=settings]').click();await page.locator('#theme').selectOption('dark');await page.locator('.sidebar [data-section=pond]').click();await page.waitForFunction(()=>document.querySelector('#main h1')?.textContent==='鱼塘');await page.mouse.move(1030,790);await page.screenshot({path:path.join(out,'pond-dark.png')});
+ assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).colorScheme),'dark');checks.push('dark theme');
+ await page.locator('.sidebar-toggle').click();assert(await page.locator('#shell').evaluate(e=>e.classList.contains('sidebar-hidden')));await page.reload();await page.locator('.sidebar-toggle').waitFor();assert(await page.locator('#shell').evaluate(e=>e.classList.contains('sidebar-hidden')));await page.locator('.sidebar-toggle').click();assert.equal(await page.locator('#tabbar .sidebar-toggle').count(),0);assert.equal(await page.locator('.sidebar .sidebar-toggle').count(),1);checks.push('sidebar toggle inside rail, persists and restores');
+ await page.locator('.sidebar [data-section=settings]').click();await page.locator('#theme').waitFor();assert.equal(await page.locator('.sidebar [data-section=settings]').getAttribute('aria-label'),'鱼钩');await page.locator('.sidebar [data-section=bait]').click();await page.locator('#feedback').waitFor();assert.equal(await page.locator('#theme').count(),0);for(const text of ['logicd@foxmail.com','https://www.openlogicspace.cn/','1071409377'])assert((await page.locator('#main').innerText()).includes(text));checks.push('separate fishhook settings and contact details');
+ await page.locator('.sidebar [data-section=pond]').click();await page.locator('[data-open=shijie]').click();await page.locator('#tab-actions #project-zoom').waitFor();assert.equal(await page.locator('#main .project-tools').count(),0);
+ for(const width of [1040,760,375]){await page.setViewportSize({width,height:700});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.waitForTimeout(80);assert(await page.locator('#project-viewport').evaluate(e=>e.getBoundingClientRect().height>200),'viewport height at '+width+': '+await page.locator('#project-viewport').evaluate(e=>e.getBoundingClientRect().height));}checks.push('project controls in tab bar and viewport retained at three widths');
+
+ await page.locator('.sidebar [data-section=rankings]').click();await page.locator('[data-open=rank-github-trending]').waitFor();assert.equal(await page.locator('.project-card').count(),6);await page.locator('[data-action=ranking-filter][data-filter=skill]').click();assert.equal(await page.locator('.project-card').count(),2);await page.locator('[data-action=ranking-filter][data-filter=all]').click();await page.locator('[data-action=favorite][data-id=rank-skills-sh]').click();await page.waitForFunction(()=>document.querySelector('[data-action=favorite][data-id=rank-skills-sh]').getAttribute('aria-pressed')==='true');await page.locator('.sidebar [data-section=gear]').click();await page.locator('#profile-form').waitFor();await page.waitForFunction(()=>document.querySelector('#main h1')?.textContent==='鱼苗').catch(async e=>{console.log('heading',await page.locator('#main h1').innerText(),'errors',errors);throw e;});await page.locator('[data-action=pond-favorites]').click();await page.locator('[data-open=rank-skills-sh]').waitFor();checks.push('ranking favorites in pond');
+ await page.setViewportSize({width:1040,height:800});await page.locator('.sidebar [data-section=rankings]').click();await page.locator('[data-open=rank-github-trending]').waitFor();await page.screenshot({path:path.join(out,'rankings.png')});await page.locator('.sidebar [data-section=pond]').click();await page.locator('[data-filter=all]').click();await page.setViewportSize({width:1040,height:800});assert((await page.locator('.pond-grid .project-card').count())>0);assert.equal(await page.locator('.pond-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),2);await page.locator('[data-action=pond-next]').click();assert((await page.locator('.pond-grid .project-card').count())>0);assert.equal(await page.locator('.tab-add').count(),0);assert.equal(await page.locator('.bottom-note [data-action=add]').count(),0);for(const route of ['pond','rankings','chat','gear','bait','settings']){await page.locator('.sidebar [data-section='+route+']').click();await page.waitForTimeout(30);assert.equal(await page.locator('.page-head .subtitle').count(),0);assert.equal(await page.locator('.home-tab span').innerText(),({pond:'鱼塘',rankings:'渔具',chat:'鱼聊',gear:'鱼苗',bait:'鱼饵',settings:'鱼钩'})[route]);}checks.push('4 by 3 pagination, page intros removed, add buttons removed');assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({ok:true,checks,errors,note:'Mocked host bridge; does not prove native projects or external services'},null,2));console.log(`PASS ${checks.length} shell UI checks`);
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

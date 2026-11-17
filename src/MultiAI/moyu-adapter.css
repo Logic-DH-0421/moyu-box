@@ -1,0 +1,27 @@
+﻿/* Container adaptation only; preserves the project's controls, selectors and API. */
+html,body{min-width:0!important;width:100%;overflow-x:hidden}
+@media(max-width:1000px){
+ .layout.parallel-shell{grid-template-columns:220px minmax(0,1fr)!important}
+ .sidebar,.workspace,.workspace-top,.selection-toolbar,.composer{min-width:0!important}
+ .sidebar{overflow-y:auto;padding-left:10px!important;padding-right:10px!important}
+ .sidebar .utility-nav{left:10px!important;right:10px!important}
+ .workspace .cards,.workspace .cards.adaptive{grid-template-columns:minmax(0,1fr)!important}
+ .workspace .card{min-width:0!important}
+ .workspace-top .status-top,.status-counts,.composer-bottom-actions,.workspace-actions{flex-wrap:wrap;gap:6px}
+ .workspace .composer{width:calc(100% - 16px)!important;margin-left:8px!important;margin-right:8px!important}
+ .brand{font-size:12px!important}.browser-btn{padding-left:6px!important;padding-right:6px!important}
+ .browser-logo,.browser-logo img,.browser-logo svg{width:19px;height:19px}
+ .selected-chips{min-width:0;overflow:auto}.workspace .input-wrap{min-height:75px!important;height:75px!important}
+}
+@media(max-width:600px){
+ body{height:auto!important;overflow:auto!important}
+ .layout.parallel-shell{height:auto!important;grid-template-columns:minmax(0,1fr)!important}
+ .sidebar{height:auto!important;padding-bottom:12px!important}
+ .sidebar #platformList{max-height:220px;min-height:130px;overflow:auto}
+ .sidebar .utility-nav{position:static!important;margin-top:10px!important}
+ .workspace{height:85vh!important;min-height:500px}
+ .topbar .local{display:none}.topbar{padding-left:10px!important}
+}
+
+/* Window ownership belongs to MoyuBox; keep project settings/help only. */
+.topbar .top-btn[onclick*="/api/minimize"],.topbar .top-btn[onclick="shutdownApp()"]{display:none!important}

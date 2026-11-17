@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"word-reader","name":"Word 小说阅读器","description":"Word 文档界面 · 默认打开 TXT / EPUB，支持目录、搜索与阅读进度。","kind":"word-reader","icon":"book","enabled":true,"builtin":true}

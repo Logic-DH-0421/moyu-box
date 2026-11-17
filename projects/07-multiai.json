@@ -1,0 +1,1 @@
+{"schemaVersion": 1, "id": "multiai", "name": "多平台 AI 同步输入器", "description": "多平台统一输入、附件、回复与浏览器状态。", "kind": "multiai", "icon": "chat", "enabled": true, "builtin": true}

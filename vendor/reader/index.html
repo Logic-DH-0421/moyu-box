@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="novel-token" content="/*__APP_TOKEN__*/">
+  <title>豆包 - 智能文档助手</title>
+  <style>/*__APP_STYLES__*/</style>
+</head>
+<body>
+<svg class="brand-symbols" aria-hidden="true" focusable="false">
+  <symbol id="pixelDoubaoMark" viewBox="0 0 16 16">
+    <path fill="#6f7cff" d="M3 1h9v1h2v2h1v7h-1v2h-2v1H8l-3 2v-2H3v-1H2v-2H1V4h1V2h1z"/>
+    <path fill="#9eb8ff" d="M3 3h8v1H4v1H3zM12 4h1v5h-1z"/>
+    <path fill="#fff" d="M4 6h2v2H4zM10 6h2v2h-2zM5 10h6v1H9v1H7v-1H5z"/>
+  </symbol>
+  <symbol id="pixelDeepseekMark" viewBox="0 0 16 16">
+    <path fill="#4d6bfe" d="M1 7h2V5h2V4h5v1h2V3h2v2h1v5h-1v2h-2v1H9v1H5v-1H3v-1H2v-2H1z"/>
+    <path fill="#8fa8ff" d="M3 6h3V5h4v1H8v1H5v1H3zM12 4h3v2h-2v1h-2V6h1z"/>
+    <path fill="#fff" d="M9 7h2v2H9zM4 9h3v1H5v1H3v-1h1z"/>
+  </symbol>
+</svg>
+<div id="app" class="theme-light">
+  <aside id="sidebar">
+    <div class="deepseek-only deepseek-sidebar-head">
+      <button id="deepseekLogoButton" class="deepseek-wordmark" title="DeepSeek 风格界面（非官方）"><svg class="pixel-brand-icon deepseek-wordmark-icon" viewBox="0 0 16 16"><use href="#pixelDeepseekMark"/></svg><b>deepseek</b></button>
+      <div class="deepseek-head-actions">
+        <button id="deepseekSearchButton" title="搜索当前小说"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg></button>
+        <button id="deepseekSettingsButton" title="阅读设置"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M9 4v16"/></svg></button>
+      </div>
+    </div>
+    <button id="deepseekNewChat" class="deepseek-only deepseek-new-chat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>开启新对话</span></button>
+    <div class="search-box">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+      <input id="searchInput" type="text" placeholder="搜索..." autocomplete="off">
+      <span class="search-key">Ctrl K</span>
+    </div>
+
+    <nav class="function-zone">
+      <button class="nav-action brand-row"><svg class="pixel-brand-icon doubao-brand-icon" viewBox="0 0 16 16"><use href="#pixelDoubaoMark"/></svg><span class="normal-label">豆包</span><span class="safe-label">豆包</span></button>
+      <button class="nav-action" id="importButton"><svg class="icon reader-nav-icon" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 19h14"/></svg><svg class="icon doubao-nav-icon" viewBox="0 0 24 24"><path d="M13 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6"/><path d="M11 13l1.5-4.5L17 4a2.1 2.1 0 0 1 3 3l-4.5 4.5z"/></svg><span class="normal-label">导入小说</span><span class="safe-label">新对话</span><kbd class="safe-only">Ctrl Shift K</kbd></button>
+      <button class="nav-action" id="settingsButton"><svg class="icon reader-nav-icon" viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h2m4 0h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><svg class="icon doubao-nav-icon" viewBox="0 0 24 24"><path d="M4.5 3.5l14 7.1-6.2 2.1-2.1 6.2z"/><path d="M12.3 12.7l4.6 4.6"/></svg><span class="normal-label">阅读设置</span><span class="safe-label">新工作任务</span></button>
+      <button class="nav-action" id="shortcutsButton"><svg class="icon reader-nav-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M8 10h8M8 14h5"/></svg><svg class="icon doubao-nav-icon" viewBox="0 0 24 24"><path d="M8 6.5A4 4 0 0 1 12 3a4 4 0 0 1 4 3.5"/><rect x="4" y="6.5" width="16" height="13.5" rx="4"/><path d="M8 12h.01M16 12h.01M9 16h6"/></svg><span class="normal-label">快捷键</span><span class="safe-label">AI 创作</span></button>
+      <button class="nav-action" id="safeButton"><svg class="icon reader-nav-icon" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.6-2.7 8-7 10-4.3-2-7-5.4-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><svg class="icon doubao-nav-icon" viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10H3zM3 7V5h7l2 2"/></svg><span class="normal-label">安全切换</span><span class="safe-label">云盘</span></button>
+      <button class="nav-action" id="libraryButton"><svg class="icon reader-nav-icon" viewBox="0 0 24 24"><path d="M4 7.5h16v12H4zM4 8l3-4h5l2 3"/></svg><svg class="icon doubao-nav-icon" viewBox="0 0 24 24"><path d="M12 3l8 5-8 5-8-5zM4 12l8 5 8-5M4 16l8 5 8-5"/></svg><span class="normal-label">本地书库</span><span class="safe-label">技能</span></button>
+    </nav>
+
+    <section class="history-section">
+      <div id="historyLabel" class="section-label">历史对话</div>
+      <div class="history-scroll">
+        <div id="searchResults" class="search-results hidden"></div>
+        <div id="bookList" class="book-list normal-library"></div>
+        <div id="chapterList" class="chapter-list normal-library"></div>
+      </div>
+    </section>
+
+    <button id="interfaceButton" class="interface-switch">
+      <span class="profile-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 20c.7-4 2.9-6 6.5-6s5.8 2 6.5 6"/></svg><span class="deepseek-only">h</span></span>
+      <span class="normal-label">界面切换</span><span class="safe-label">用户020421</span><span class="deepseek-only deepseek-user-name">h Ding</span><span class="chevron">›</span><span class="deepseek-only deepseek-user-more">•••</span>
+    </button>
+  </aside>
+
+  <main id="mainArea">
+    <header id="topbar">
+      <div class="top-left-icons"><button title="收起侧栏"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M9 4v16"/></svg></button><button title="新建"><svg class="icon" viewBox="0 0 24 24"><path d="M5 19h4L19 9a3 3 0 0 0-4-4L5 15zM13.5 6.5l4 4"/></svg></button></div>
+      <div class="conversation-heading"><div id="headerTitle">AI 小说阅读器</div><div id="headerSubtitle">AI 生成内容仅供参考</div></div>
+      <div class="top-right-icons"><button id="muteButton" title="关闭自动播报"><svg class="icon" viewBox="0 0 24 24"><path d="M5 10v4h3l4 4V6L8 10zM16.5 9.5l4 5M20.5 9.5l-4 5M4 4l16 16"/></svg></button><button id="topMoreButton" class="top-dots" title="更多">•••</button><button id="headerLibraryButton" class="header-pill"><svg class="reader-header-icon icon" viewBox="0 0 24 24"><path d="M4 7.5h16v12H4zM4 8l3-4h5l2 3"/></svg><svg class="doubao-header-icon" viewBox="0 0 20 20"><rect x="1" y="1" width="8" height="8" fill="#f25022"/><rect x="11" y="1" width="8" height="8" fill="#7fba00"/><rect x="1" y="11" width="8" height="8" fill="#00a4ef"/><rect x="11" y="11" width="8" height="8" fill="#ffb900"/></svg><svg class="deepseek-only deepseek-share-icon" viewBox="0 0 24 24"><path d="M13 6l6 5-6 5M18.5 11H10c-4 0-6 2-7 6"/></svg><span class="normal-label">本地书库</span><span class="safe-label">下载电脑版</span></button></div>
+    </header>
+
+    <section id="contentScroll"><article id="readerContent"><div id="chapterText" class="chapter-text empty-state"></div><div class="response-actions"><button id="copyButton" title="复制"><svg class="icon" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button><button id="speakButton" title="朗读"><svg class="icon" viewBox="0 0 24 24"><path d="M5 10v4h3l4 4V6L8 10zM17 9a5 5 0 0 1 0 6"/></svg></button><button><svg class="icon" viewBox="0 0 24 24"><path d="M7 20H4V9h3m0 11h9a2 2 0 0 0 2-1.6l2-8A2 2 0 0 0 18 8h-5l1-4-1.5-1L7 9z"/></svg></button><button><svg class="icon flip" viewBox="0 0 24 24"><path d="M7 20H4V9h3m0 11h9a2 2 0 0 0 2-1.6l2-8A2 2 0 0 0 18 8h-5l1-4-1.5-1L7 9z"/></svg></button><button id="reloadButton"><svg class="icon" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6M20 5v6h-6"/></svg></button><button class="dots">•••</button></div></article></section>
+
+    <section id="composerWrap"><div id="composer"><textarea id="commandInput" rows="1" placeholder="发消息或按住空格说话..."></textarea><div class="composer-toolbar">
+      <button class="plus-button" id="composerImport" title="添加附件"><span class="plus-label">＋</span><svg class="deepseek-only deepseek-paperclip" viewBox="0 0 24 24"><path d="M8 12.5l6.6-6.6a3 3 0 0 1 4.2 4.2l-8.1 8.1a5 5 0 0 1-7.1-7.1l7.7-7.7"/></svg></button><span class="tool-separator"></span>
+      <button id="themeModeButton" class="mode-button"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-1.1-.9-2-2-2h-3a2 2 0 0 1-2-2V5c0-1.1-.9-2-2-2z"/><circle cx="7.5" cy="11" r="1"/><circle cx="9.5" cy="16" r="1"/></svg><span id="themeModeLabel">浅色</span><span class="tiny-chevron">›</span></button>
+      <div class="normal-tools"><button class="reader-tool" data-action="font-increase"><b>A+</b><span>加大字号</span></button><button class="reader-tool" data-action="font-decrease"><b>A−</b><span>减小字号</span></button><button class="reader-tool" data-action="paragraph-increase"><b>↕</b><span>增加段距</span></button><button class="reader-tool" data-action="paragraph-decrease"><b>↕</b><span>减小段距</span></button><button class="reader-tool" data-action="line-increase"><b>☷</b><span>增加行距</span></button><button class="reader-tool" data-action="line-decrease"><b>☷</b><span>减小行距</span></button><button class="reader-tool" id="moreButton"><svg class="toolbar-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="5" height="5" rx="1"/><rect x="15" y="4" width="5" height="5" rx="1"/><rect x="4" y="15" width="5" height="5" rx="1"/><rect x="15" y="15" width="5" height="5" rx="1"/></svg><span>更多</span></button></div>
+      <div class="safe-tools safe-only"><button><svg viewBox="0 0 24 24"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg><span>快速</span><span class="fast-chevron">›</span></button><button><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="5"/><circle cx="12" cy="12" r="3"/><path d="M10.8 10.2l3 1.8-3 1.8z"/></svg><span>视频生成</span></button><button><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="5"/><circle cx="9" cy="10" r="1.5"/><path d="M5 17l4-4 3 3 2-2 5 3"/></svg><span>图像生成</span></button><button><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M8 10h8M8 14h5"/></svg><span>帮我写作</span></button><button><svg viewBox="0 0 24 24"><path d="M4 16l5-5 4 4 7-8M15 7h5v5"/><circle cx="6" cy="18" r="2"/></svg><span>深入研究</span></button><button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M7.5 17a7 7 0 1 1 9 0M5 20a10 10 0 1 1 14 0"/></svg><span>AI 播客</span></button><button><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/></svg><span>录音转写</span></button><button><svg viewBox="0 0 24 24"><path d="M10 18V6l9-2v12"/><circle cx="7" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg><span>音乐生成</span></button><button><svg viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></svg><span>更多</span></button></div>
+      <div class="deepseek-only deepseek-tools"><button id="deepseekThinkingButton"><svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3zM9 22h6"/><path d="M9 9l2 2 4-4"/></svg><span>深度思考</span></button><button id="deepseekSmartSearch"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4a13 13 0 0 1 0 16M12 4a13 13 0 0 0 0 16"/></svg><span>智能搜索</span></button></div>
+      <button class="send-orb" id="sendButton" title="发送指令"><svg class="wave-icon" viewBox="0 0 24 24"><path d="M5 10v4M9 7v10M13 4v16M17 7v10M21 10v4"/></svg><svg class="send-icon" viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg></button>
+    </div></div><div class="deepseek-only deepseek-disclaimer">内容由 AI 生成，请仔细甄别</div></section>
+  </main>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+  <section id="settingsModal" class="dialog settings-dialog hidden"><div class="dialog-header"><strong>阅读设置</strong><button class="dialog-close">×</button></div><div class="simulation-options"><label class="switch-row"><span><b>内容模拟</b><small>在正文中模拟序号、加粗和分割线</small></span><input id="contentSimulation" type="checkbox"><i></i></label><label class="switch-row"><span><b>界面模拟</b><small>当前界面：<span id="currentInterfaceName">豆包</span></small></span><input id="interfaceSimulation" type="checkbox"><i></i></label></div><label>字号 <span id="fontValue"></span><input id="fontRange" type="range" min="14" max="30"></label><label>行距 <span id="lineValue"></span><input id="lineRange" type="range" min="1.3" max="2.8" step="0.1"></label><label>段距 <span id="paragraphValue"></span><input id="paragraphRange" type="range" min="4" max="36" step="2"></label><label>正文宽度 <span id="widthValue"></span><input id="widthRange" type="range" min="680" max="1300" step="20"></label><div class="theme-row"><button data-theme="light">浅色</button><button data-theme="dark">深色</button><button data-theme="paper">仿真</button><button data-theme="eye">护眼</button></div><div class="dialog-subtitle">快捷键自定义</div><div class="shortcut-editor"><label><span>界面模拟</span><input class="shortcut-input" id="safeShortcut" readonly></label><label><span>导入小说</span><input class="shortcut-input" id="importShortcut" readonly></label><label><span>阅读设置</span><input class="shortcut-input" id="settingsShortcut" readonly></label><label><span>上一章</span><input class="shortcut-input" id="previousShortcut" readonly></label><label><span>下一章</span><input class="shortcut-input" id="nextShortcut" readonly></label></div><div class="shortcut-help">点击输入框后直接按下新的组合键。</div></section>
+  <section id="libraryModal" class="dialog wide-dialog hidden"><div class="dialog-header"><strong>本地书库</strong><button class="dialog-close">×</button></div><div id="libraryRows"></div><div class="data-path">小说与进度保存在 EXE 同级的 NovelReaderData 文件夹。</div></section>
+  <section id="themeMenu" class="floating-menu hidden"><button data-theme="light"><i class="swatch light"></i><span>浅色</span></button><button data-theme="dark"><i class="swatch dark"></i><span>深色</span></button><button data-theme="paper"><i class="swatch paper"></i><span>仿真</span></button><button data-theme="eye"><i class="swatch eye"></i><span>护眼</span></button></section>
+  <section id="interfaceMenu" class="floating-menu interface-menu hidden"><button id="doubaoInterfaceChoice"><svg class="menu-logo pixel-menu-logo" viewBox="0 0 16 16"><use href="#pixelDoubaoMark"/></svg><span>豆包</span><em></em></button><button id="deepseekInterfaceChoice"><svg class="menu-logo pixel-menu-logo" viewBox="0 0 16 16"><use href="#pixelDeepseekMark"/></svg><span>DeepSeek</span><em></em></button><div class="menu-divider"></div><button id="readerInterfaceChoice"><span class="menu-logo reader-logo">阅</span><span>阅读界面</span><em></em></button></section>
+  <input id="novelFileInput" type="file" accept=".txt,.epub,text/plain,application/epub+zip" class="hidden">
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script>/*__APP_SCRIPT__*/</script>
+</body>
+</html>

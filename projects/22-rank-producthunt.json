@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-producthunt",
+  "name": "Product Hunt",
+  "kind": "website",
+  "url": "https://www.producthunt.com/leaderboard",
+  "description": "新产品榜，包含网页应用、软件等；不专指 Windows 软件。",
+  "icon": "app",
+  "builtin": true,
+  "rankingCategory": "software"
+}

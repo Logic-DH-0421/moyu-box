@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "somecert",
+  "name": "SomeCert",
+  "url": "https://somecert.com/zh",
+  "description": "用户指定的网站入口。",
+  "icon": "globe",
+  "kind": "website",
+  "builtin": true
+}

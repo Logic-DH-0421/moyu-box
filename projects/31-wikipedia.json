@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "wikipedia",
+  "name": "维基百科",
+  "url": "https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5",
+  "description": "中文维基百科。",
+  "icon": "book",
+  "kind": "website",
+  "builtin": true
+}

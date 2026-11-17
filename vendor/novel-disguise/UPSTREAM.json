@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/NiaoBlush/novel-disguise",
+  "commit": "db1501ec07270a22a741bf78f8b8ba4ebca8cc7d",
+  "version": "2.15.0",
+  "license": "MIT",
+  "sha256": {
+    "LICENSE": "0d0e203c608a08a2ba58f212d33c3644a23d988aa69936b6a46a021436ef83c7",
+    "readme.md": "f2d670affe29c1d61eaebd394fe830816a5401df19b980c6cf3c79cd0567acf3",
+    "novel-disguise.js": "e9dbe30462e4c642f5fbbe07a0e5498795ddc10098a30f0e109d482064a26cdd",
+    "novel-disguise-resource.js": "327b567dc75b01bd9abfbe2ad35c702d77c89adfec4a2522c6d64616164948ba",
+    "novel-disguise-jquery.js": "e293ea2381edf133a56916bd697bd0b52686c7cfa63e00caaea31f1fb1c65ad7"
+  }
+}

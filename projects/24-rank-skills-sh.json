@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-skills-sh",
+  "name": "skills.sh",
+  "kind": "website",
+  "url": "https://www.skills.sh/",
+  "description": "Agent Skills 安装热度与趋势榜。",
+  "icon": "puzzle",
+  "builtin": true,
+  "rankingCategory": "skill"
+}

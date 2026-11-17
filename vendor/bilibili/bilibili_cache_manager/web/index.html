@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>B站稍后再看管理器</title>
+  <link rel="stylesheet" href="style.css?v=0723">
+</head>
+<body>
+  <div class="ui-scale-root">
+  <div class="window-bar pywebview-drag-region"><div class="window-controls"><button id="windowMin" aria-label="最小化">—</button><button id="windowMax" aria-label="最大化">□</button><button id="windowClose" class="close" aria-label="关闭">×</button></div></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-mark" aria-label="B站稍后再看管理器">
+        <svg viewBox="0 0 52 52"><rect x="6" y="12" width="40" height="34" rx="10"/><path d="M18 8l4 5m12-5-4 5M18 23l14 8-14 8z"/></svg>
+      </div>
+      <nav>
+        <button class="nav-item" data-feed="recommend"><svg class="nav-svg" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg><span>推荐</span></button>
+        <button class="nav-item" data-feed="popular"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M13 3c1 5-4 6-2 10 2-1 3-3 3-5 5 4 6 8 3 11-3 3-8 2-10-1-3-5 1-8 2-10 0 3 1 3 1 3 0-3 3-5 3-8Z"/></svg><span>热门</span></button>
+        <button class="nav-item" data-feed="dynamic"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M4 12h4l3-8 3 16 3-8h3"/></svg><span>动态</span></button>
+        <button class="nav-item" data-feed="search"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 5 5"/></svg><span>搜索</span></button>
+        <button class="nav-item" data-feed="history"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg><span>历史记录</span></button>
+        <button class="nav-item active" data-view="queue"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M9 6h13M9 12h13M9 18h13"/><rect x="2" y="4" width="4" height="4" rx="1"/><rect x="2" y="10" width="4" height="4" rx="1"/><rect x="2" y="16" width="4" height="4" rx="1"/></svg><span>缓存管理</span></button>
+        <button class="nav-item" id="coverNav"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m5 17 4-4 3 3 2-2 5 5"/></svg><span>封面提取</span></button>
+        <button class="nav-item muted" id="settingsNav"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12c0-.4 0-.7-.1-1l2-1.5-2-3.5-2.5 1A7 7 0 0 0 15 6l-.4-2.7h-4L10 6a7 7 0 0 0-1.4 1L6 6 4 9.5 6.1 11A7 7 0 0 0 6 12c0 .3 0 .7.1 1L4 14.5 6 18l2.6-1a7 7 0 0 0 1.4 1l.5 2.7h4L15 18a7 7 0 0 0 1.4-1l2.5 1 2-3.5-2-1.5c.1-.3.1-.7.1-1Z"/></svg><span>设置</span></button>
+
+      </nav>
+      <div class="mascot" aria-hidden="true">
+        <svg viewBox="0 0 108 148"><path class="cloud" d="M0 115c18-16 30-6 43-17 16-13 29 1 40-3 13-5 21 7 25 17v36H0z"/><path class="ear" d="M22 52L11 38l17 7m57 5 15-14-19 7"/><rect class="body" x="20" y="43" width="68" height="62" rx="17"/><rect class="face" x="28" y="51" width="52" height="39" rx="12"/><circle cx="44" cy="69" r="3"/><circle cx="64" cy="69" r="3"/><path class="smile" d="M47 79c5 4 10 4 15 0"/><path class="arm" d="M20 73 7 86m81-12 13 11"/></svg>
+      </div>
+      <div class="sidebar-status"><i></i><span>后台运行中</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1>B站稍后再看管理器</h1>
+        <div class="run-pill"><i></i>后台运行中</div>
+        <div class="connection"><i></i><span id="headlineStatus">准备就绪</span></div>
+      </header>
+
+      <section class="settings-card settings-page" id="settingsCard">
+        <header class="settings-page-head"><h2>设置</h2><p>管理客户端偏好、查看日志和软件信息。</p></header>
+        <div id="preferencesPanel" class="preferences-panel">
+        <div class="settings-group"><h3>客户端与画质</h3><div class="settings-fields">
+          <label class="field path-field"><span>缓存文件夹路径</span><input id="clientPath" placeholder="使用客户端当前缓存目录" spellcheck="false"><small>修改后，下次拉起B站客户端时应用</small></label>
+          <label class="field quality-field"><span>默认画质</span><select id="quality"></select></label>
+          <label class="switch-line setting-switch" title="开启后，软件启动时自动连接B站客户端"><input type="checkbox" id="launchClientOnStartup"><span class="checkmark"></span>启动时拉起B站客户端</label>
+        </div></div>
+        <div class="settings-group"><h3>缓存与显示</h3><div class="settings-fields">
+          <label class="switch-line"><input type="checkbox" id="cacheAll"><span class="checkmark"></span>缓存全部</label>
+          <label class="switch-line"><input type="checkbox" id="autoFallback"><span class="checkmark"></span>自动降级</label>
+          <label class="switch-line setting-switch" title="仅在B站客户端确认加入缓存后移出；提交失败的视频会保留"><input type="checkbox" id="autoRemoveWatchLater"><span class="checkmark"></span>加入缓存后自动移出稍后再看</label>
+          <label class="switch-line setting-switch" title="不加载视频封面，并将列表切换为紧凑表格"><input type="checkbox" id="hiddenMode"><span class="checkmark"></span>伪装模式</label>
+        </div></div>
+        <div class="settings-group client-tools"><h3>客户端工具</h3><div class="settings-fields">
+          <button class="btn secondary" id="showClientBtn">显示B站客户端</button>
+          <button class="btn secondary" id="offlineBtn">打开离线缓存</button>
+        </div></div>
+        </div>
+        <div id="logsPanel" class="settings-group settings-subpage"><h3>日志</h3><div class="panel-actions"><button class="btn secondary" id="readLogsBtn">刷新日志</button><button class="btn secondary" id="logNav">打开日志文件</button><button class="btn secondary" id="openLogFolderBtn">打开所在目录</button></div><p id="settingsLogPath"></p><pre id="logContent">加载日志中…</pre></div>
+        <div id="aboutPanel" class="settings-group settings-subpage"><h3>关于</h3><h2>B站稍后再看管理器</h2><p id="aboutVersion"></p><p>通过B站官方客户端读取视频、稍后再看和缓存状态，并调用客户端自带的离线缓存功能。</p><p>缓存文件由B站客户端管理。</p><a id="contactAuthorLink" href="https://www.openlogicspace.cn/">联系作者 · openlogicspace.cn</a></div>
+      </section>
+
+      <section class="overview-row">
+        <div class="toolbar-main">
+          <strong class="toolbar-title" id="toolbarTitle">稍后再看</strong>
+          <button class="btn secondary accent" id="refreshBtn"><svg viewBox="0 0 24 24"><path d="M20 6v5h-5"/><path d="M18.4 15A7 7 0 1 1 17 7l3 4"/></svg>刷新列表</button>
+          <button class="btn primary" id="cacheBtn" data-toolbar-view="queue"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.3-1.7A4.8 4.8 0 0 0 7 18Z"/><path d="M12 16V9m-3 3 3-3 3 3"/></svg>缓存选中项</button>
+          <button class="btn secondary" id="resumeBtn" data-toolbar-view="downloading" disabled><svg viewBox="0 0 24 24"><path d="m9 7 8 5-8 5z"/></svg>一键开始</button>
+          <button class="btn secondary" id="pauseBtn" data-toolbar-view="downloading" disabled><svg class="solid-icon" viewBox="0 0 24 24"><rect x="7" y="6" width="4" height="12" rx="1"/><rect x="13" y="6" width="4" height="12" rx="1"/></svg>一键暂停</button>
+          <button class="btn secondary" id="pauseSelectedBtn" data-toolbar-view="downloading" disabled>暂停勾选项</button>
+          <button class="btn secondary" id="resumeSelectedBtn" data-toolbar-view="downloading" disabled>继续勾选项</button>
+          <button class="btn secondary" id="showPlayerBtn" data-toolbar-view="downloading" title="播放页居中显示"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3M9 8l6 3-6 3z"/></svg><b>播放页居中</b></button>
+          <button class="btn secondary" id="deleteBtn"><svg class="solid-icon" viewBox="0 0 24 24"><path d="M8 7V5h8v2h4v2h-1l-1 11H6L5 9H4V7h4Zm2 4v6h2v-6h-2Zm4 0v6h2v-6h-2Z"/></svg><b>删除</b></button>
+          <button class="btn secondary" id="danmakuBtn" data-toolbar-view="completed" disabled><svg class="solid-icon" viewBox="0 0 24 24"><path d="M12 3c5 0 9 3.6 9 8s-4 8-9 8c-1.2 0-2.4-.2-3.4-.6L4 21l1.3-4C3.9 15.6 3 13.4 3 11c0-4.4 4-8 9-8Z"/><circle cx="8.5" cy="11" r="1.1" fill="white"/><circle cx="12" cy="11" r="1.1" fill="white"/><circle cx="15.5" cy="11" r="1.1" fill="white"/></svg>更新弹幕</button>
+        </div>
+        <div class="metrics" id="metrics">
+          <article class="metric pink"><div><span>稍后再看</span><strong id="metricTotal">0</strong></div><i><svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="m8 3 4 3 4-3M10 11l5 3-5 3z"/></svg></i></article>
+          <article class="metric purple"><div><span>已选择</span><strong id="metricSelected">0</strong></div><i><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8 12 3 3 5-6"/></svg></i></article>
+          <article class="metric violet"><div><span>正在缓存</span><strong id="metricActive">0</strong></div><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i></article>
+          <article class="metric green"><div><span>已完成</span><strong id="metricCompleted">0</strong></div><i><svg viewBox="0 0 24 24"><path d="M12 4v11m-4-4 4 4 4-4M5 19h14"/></svg></i></article>
+          <article class="metric red"><div><span>失败</span><strong id="metricFailed">0</strong></div><i><svg viewBox="0 0 24 24"><path d="m12 3 9 17H3z"/><path d="M12 9v5m0 3h.01"/></svg></i></article>
+        </div>
+      </section>
+      <span id="currentTask" class="sr-only">当前任务：无</span>
+
+      <section class="content-card">
+        <div class="filter-row">
+          <div class="search-wrap"><input id="keyword" placeholder="搜索视频标题 / UP主 / BV号..."><span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span></div>
+          <input id="uploader" hidden>
+          <label class="inline-filter"><span>状态</span><select id="statusFilter"><option>全部</option><option>未缓存</option><option>已提交</option><option>正在缓存</option><option>已完成</option><option>失败</option><option>不支持缓存</option><option>需充电</option><option>已暂停</option></select></label>
+          <label class="inline-filter"><span>画质</span><select id="qualityFilter"><option value="">全部画质</option><option>最高可用</option><option>4K</option><option>1080P高码率</option><option>1080P</option><option>720P</option><option>480P</option></select></label>
+          <label class="inline-filter duration"><span>时长</span><input id="minDuration" type="number" min="0" placeholder="最小"></label>
+          <span class="range-mark">至</span><input id="maxDuration" class="duration-input" type="number" min="0" placeholder="最大">
+          <button class="filter-btn" id="applyFilterBtn" hidden>筛选</button>
+          <button class="reset-btn" id="resetFilterBtn">重置</button>
+          <div class="view-tabs">
+            <button class="active" data-view="queue">稍后再看（<em id="tabTotal">0</em>）</button>
+            <button data-view="downloading">正在缓存（<em id="tabActive">0</em>）</button>
+            <button data-view="completed">已缓存完成（<em id="tabCompleted">0</em>）</button>
+          </div>
+        </div>
+
+        <div class="list-head row-grid">
+          <label><input type="checkbox" id="masterCheck"></label><span>#</span><span>视频信息</span><span>UP主</span><span>时长</span><span>BV号</span><span>状态</span><span>目标画质</span><span>进度</span><span>播放量</span><span>弹幕量</span><span>视频大小</span>
+        </div>
+        <div class="video-list" id="videoList"></div>
+        <div class="empty" id="emptyState" hidden><span>▱</span><strong>当前视图暂无视频</strong><p>请刷新列表或调整筛选条件</p></div>
+        <footer class="content-footer"><span id="selectionSummary">已选择 0 项</span><span id="recordSummary">共 0 条记录</span></footer>
+      </section>
+
+      <section class="feed-card" id="feedCard" hidden>
+        <header class="feed-header"><button class="btn secondary" id="creatorBack" hidden>返回</button><div><h2 id="feedTitle">推荐</h2><p id="feedDescription">读取B站客户端当前账号的视频流</p></div><div class="feed-actions"><button class="btn secondary" id="feedRefresh">刷新</button><button class="btn primary" id="feedMore">加载更多</button><button class="btn secondary" id="feedStop" disabled>停止读取</button></div></header>
+        <div class="creator-profile" id="creatorProfile" hidden></div>
+        <nav class="native-tabs" id="creatorTabs" hidden><button class="active" data-creator-tab="activity">动态</button><button data-creator-tab="posts">投稿</button><button data-creator-tab="collections">合集和列表</button></nav>
+        <div id="collectionTrail" class="collection-trail" hidden></div>
+        <nav class="native-tabs" id="searchTabs" hidden><button data-search-type="all">综合</button><button class="active" data-search-type="video">视频</button><button data-search-type="media_bangumi">番剧</button><button data-search-type="media_ft">影视</button><button data-search-type="live">直播</button><button data-search-type="article">专栏</button><button data-search-type="bili_user">用户</button></nav>
+        <div class="history-toolbar" id="historyToolbar" hidden><span>按观看时间展示</span><button class="btn secondary" id="historyClear">清空历史记录</button></div>
+        <div class="feed-filters"><div id="feedSearchBox" hidden><input id="feedSearchKeyword" aria-label="搜索B站视频" placeholder="输入关键词搜索B站视频"><button class="btn primary" id="feedSearchSubmit">搜索</button></div><input id="feedKeyword" aria-label="筛选视频标题或UP主" placeholder="筛选已读取的标题 / UP主 / BV号"><label>时长 <input id="feedMin" type="number" min="0" placeholder="最短分钟"> 至 <input id="feedMax" type="number" min="0" placeholder="最长分钟"></label><label><input id="feedHideCached" type="checkbox"> 隐藏已缓存</label><button class="reset-btn" id="feedReset">重置</button></div>
+        <div class="search-options" id="creatorOptions" hidden>
+          <form id="creatorSearchForm"><input id="creatorKeyword" placeholder="搜索投稿视频"><button class="btn secondary" type="submit">搜索</button></form><label>排序 <select id="creatorOrder"><option value="pubdate">最新发布</option><option value="click">最多播放</option></select></label>
+        </div>
+        <div class="search-options" id="collectionOptions" hidden><label>顺序 <select id="collectionOrder"><option value="desc">最新在前</option><option value="asc">最早在前</option></select></label></div>
+        <div class="search-options" id="searchOptions" hidden>
+          <label>排序 <select id="searchOrder"><option value="totalrank">综合排序</option><option value="click">最多点击</option><option value="pubdate">最新发布</option><option value="dm">最多弹幕</option><option value="stow">最多收藏</option></select></label>
+          <label>时长 <select id="searchDuration"><option value="0">全部时长</option><option value="1">10分钟以下</option><option value="2">10–30分钟</option><option value="3">30–60分钟</option><option value="4">60分钟以上</option></select></label>
+          <label>分区 <select id="searchPartition"></select></label>
+        </div>
+        <div class="feed-list" id="feedList" tabindex="0"></div>
+        <footer class="feed-footer"><span id="feedCount">尚未读取</span><span id="feedUpdated">仅筛选已读取内容</span></footer>
+      </section>
+      <section class="cover-card" id="coverCard" hidden>
+        <header class="cover-card-head">
+          <h2>封面提取</h2>
+          <p>粘贴 B 站视频链接或直接输入 BV 号 / av 号，封面与标题会显示在主区域；确认后点「加入缓存」可入队，点「保存封面图」可把封面图片下载到本地。</p>
+        </header>
+        <div class="cover-preview" id="coverPreview">
+          <div class="cover-empty"><span>📺</span>输入链接后，这里会显示视频封面与标题</div>
+        </div>
+        <div class="cover-actions" id="coverActions" hidden>
+          <button class="btn ghost" type="button" id="coverDownloadBtn">保存封面图到本地</button>
+        </div>
+        <form class="cover-input-row" id="coverForm" autocomplete="off">
+          <input id="coverInput" placeholder="BV 号 / av 号 / 完整链接，例如 BV1xx411c7mD 或 https://www.bilibili.com/video/BV1xx" spellcheck="false">
+          <button class="btn secondary" type="button" id="coverFetchBtn">提取封面</button>
+          <button class="btn primary" type="button" id="coverQueueBtn" disabled>加入缓存</button>
+        </form>
+      </section>
+      <footer class="app-footer"><span id="logPath"></span><span>Ctrl / Shift 可辅助多选 · 缓存与弹幕文件由B站客户端管理</span></footer>
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+  <div class="modal-backdrop" id="modal" hidden><div class="modal-card"><div class="modal-icon">?</div><h2 id="modalTitle">需要人工处理</h2><p id="modalText"></p><div><button class="btn secondary" id="modalCancel">稍后处理</button><button class="btn primary" id="modalConfirm">现在处理</button></div></div></div>
+  </div>
+  <script src="feeds.js?v=0723"></script>
+  <script src="native_views.js?v=0723"></script>
+  <script src="layouts.js?v=0723"></script>
+  <script src="app.js?v=0723"></script>
+</body>
+</html>
+

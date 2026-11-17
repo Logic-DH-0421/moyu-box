@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "zlib-tv",
+  "name": "Z-Lib 入口",
+  "url": "https://z-lib.tv/zh",
+  "description": "用户指定的网站入口。",
+  "icon": "book",
+  "kind": "website",
+  "builtin": true
+}

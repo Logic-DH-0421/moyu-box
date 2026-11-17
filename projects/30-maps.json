@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "maps",
+  "name": "Google Maps",
+  "url": "https://www.google.com/maps",
+  "description": "地图与地点搜索。",
+  "icon": "globe",
+  "kind": "website",
+  "builtin": true
+}

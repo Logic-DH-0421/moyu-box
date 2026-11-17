@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "rank-similarweb",
+  "name": "Similarweb 网站榜",
+  "kind": "website",
+  "url": "https://www.similarweb.com/top-websites/",
+  "description": "按网站流量排名，部分内容可能需要账号或订阅。",
+  "icon": "globe",
+  "builtin": true,
+  "rankingCategory": "web"
+}
